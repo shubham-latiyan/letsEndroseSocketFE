@@ -10,25 +10,25 @@ import { Router } from '@angular/router';
   providedIn: 'root'
 })
 export class LoginService {
-  socket = io('http://localhost:3000');
+  socket = io('https://backend-ogvqteuntw.now.sh');
 
   constructor(private http: HttpClient, private router: Router) { }
   singupUser(obj){
-    return this.http.post('http://localhost:3000/api/usersSignUp', obj)
+    return this.http.post('https://backend-ogvqteuntw.now.sh/api/usersSignUp', obj)
   }
 
   loginUser(obj){
-    return this.http.post('http://localhost:3000/api/usersSignIn', obj)
+    return this.http.post('https://backend-ogvqteuntw.now.sh/api/usersSignIn', obj)
   }
   getuser(obj){
-    return this.http.post('http://localhost:3000/api/getUser', {id: obj})
+    return this.http.post('https://backend-ogvqteuntw.now.sh/api/getUser', {id: obj})
   }
   
   loggedOut() {
     const observable = new Observable(observer => {
       this.socket.on('userDisconnected', (data) => {
         console.log('userDisconnected', data);
-        this.router.navigate(['/signup'])
+        this.router.navigate([' '])
         observer.next(data);
       });
       // return () => { this.socket.disconnect(); };

@@ -12,7 +12,7 @@ import * as io from 'socket.io-client';
   styleUrls: ['./login.component.css']
 })
 export class LoginComponent implements OnInit {
-  socket = io.connect('http://localhost:3000');
+  socket = io.connect('https://backend-ogvqteuntw.now.sh/');
   flag: boolean = false;
   obj: any = {
     email: '',
@@ -29,8 +29,12 @@ export class LoginComponent implements OnInit {
     const helper = new JwtHelperService();
     let token = await localStorage.getItem("token");
     const decodedToken = await helper.decodeToken(token);
-    // console.log('decodedToken:', decodedToken.userId)
-    await this.getData(decodedToken.userId)
+    if(decodedToken != null){
+      await this.getData(decodedToken.userId)
+    }
+    else {
+      this.flag = true;
+    }
 
     this.socket.on('userDisconnected', (data) => {
       console.log('userDisconnected', data);
@@ -39,7 +43,7 @@ export class LoginComponent implements OnInit {
   }
 
   async login() {
-    console.log('slll', this.obj);
+    // console.log('slll', this.obj);
     await localStorage.removeItem('token');
     this.ls.loginUser(this.obj).subscribe(async (da: any) => {
       if (da.success) {
@@ -79,6 +83,7 @@ export class LoginComponent implements OnInit {
   async logOut() {
     this.socket.emit('userDisconnected', 'logOut');
     localStorage.removeItem('token');
+    this.isloggedIn = false;
     this.ls.loggedOut().subscribe((da) => {
       console.log('loogg', da);
       this.router.navigate(['/signup'])
@@ -86,15 +91,5 @@ export class LoginComponent implements OnInit {
     this.cdr.detectChanges();
 
 
-    // this.isloggedIn = false;
-
-    // await this.socket.on('userDisconnected', () => {
-    //   console.log('log outtt emittt');
-    //   this.router.navigate(['/signup'])
-    // });
-
-
-
-    // await this.cdr.detectChanges();
   }
 }
