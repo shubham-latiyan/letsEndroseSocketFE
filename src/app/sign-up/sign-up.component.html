@@ -1,0 +1,27 @@
+<div class="col-md-6 col-md-offset-3">
+  <h2>Register</h2>
+  <form name="form">
+      <div class="form-group">
+          <label for="firstName">First Name</label>
+          <input type="text" class="form-control" name="firstName" [(ngModel)]="obj.firstName"/>
+      </div>
+      <div class="form-group">
+          <label for="lastName">Last Name</label>
+          <input type="text" class="form-control" name="lastName" [(ngModel)]="obj.lastName"/>
+      </div>
+      <div class="form-group">
+          <label for="email">email</label>
+          <input type="text" class="form-control" name="email" [(ngModel)]="obj.email"/>
+      </div>
+      <div class="form-group">
+          <label for="password">Password</label>
+          <input type="password" class="form-control" name="password" [(ngModel)]="obj.password" />
+      </div>
+      <div class="form-group">
+          <button (click)=register() class="btn btn-primary">Register</button>
+          <br>
+          <br>
+          <a  class="btn btn-primary" [routerLink]="['/login']">Login</a>
+      </div>
+  </form>
+</div>
